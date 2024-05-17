@@ -8,6 +8,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -23,8 +25,13 @@ public class Shop {
     private String name;
     @Column
     @NotNull
-    private double latitude;
+    private String address;
     @Column
     @NotNull
-    private double longitude;
+    private String phone;
+    @Column
+    private LocalDate open_date;
+    @Column
+    @NotNull
+    private boolean open;
 }

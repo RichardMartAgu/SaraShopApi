@@ -10,6 +10,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Data
@@ -26,14 +27,16 @@ public class Section {
     @Size(max = 25, message = "El nombre no puede tener más de 25 caracteres")
     @Column
     private String name;
-    @NotNull(message = "El teléfono es obligatorio")
+    @NotNull
     @Column
-    private String telephone;
-    @NotNull(message = "El el color es obligatorio")
+    private String description;
     @Column
-    private String address;
+    private LocalDate creation_date;
+    @Column
+    @NotNull
+    private boolean stock;
     @ToString.Exclude
-    @OneToMany(mappedBy = "brand")
+    @OneToMany(mappedBy = "section")
     @JsonIgnore
     private List<Product> product;
 

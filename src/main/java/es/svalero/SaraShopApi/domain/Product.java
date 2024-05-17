@@ -23,28 +23,22 @@ public class Product {
     @NotNull(message = "El nombre es obligatorio")
     @Column
     private String name;
-    @NotNull(message = "El precio es obligatorio")
+    @NotNull
     @Column
-    private int price;
-    @Min(value = 0, message = "El tamaño mínimo debe ser mayor que cero")
+    private String description;
     @Column
-    @NotNull(message = "El tamaño mínimo es obligatorio")
-    @Positive
-    private int minimumSize;
-    @Min(value = 0, message = "El tamaño máximo debe ser mayor que cero")
+    @NotNull
+    private float price;
     @Column
-    @NotNull(message = "El tamaño máximo es obligatorio")
-    @Positive
-    private int maximumSize;
+    private LocalDate creation_date;
     @Column
-    private boolean premium;
-    @Column
-    private LocalDate registerDate;
+    @NotNull
+    private boolean stock;
 
 
     @ToString.Exclude
     @ManyToOne
-    @NotNull(message = "El Id de la marca asociada es obligatoria")
+    @NotNull(message = "El Id de la sección asociada es obligatoria")
     @JoinColumn(name = "section_id")
     private Section section;
 
