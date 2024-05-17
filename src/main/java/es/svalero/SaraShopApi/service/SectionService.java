@@ -33,28 +33,28 @@ public class SectionService {
 
 
     public Section saveSection(Section section) {
-        logger.info("Ini savesection " + section);
+        logger.info("Ini saveSection " + section);
         sectionRepository.save(section);
-        logger.info("End savesection " + section);
+        logger.info("End saveSection " + section);
         return section;
     }
 
     public void removeSection(long sectionId) throws SectionNotFoundException {
-        logger.info("Ini removesection ID: " + sectionId);
+        logger.info("Ini removeSection ID: " + sectionId);
         Section section = sectionRepository.findById(sectionId).orElseThrow(() -> new SectionNotFoundException(sectionId));
-        logger.info("End removesection section: " + section);
+        logger.info("End removeSection section: " + section);
         sectionRepository.delete(section);
     }
 
     public void modifySection(Section newsection, long sectionId) throws SectionNotFoundException {
-        logger.info("Ini modifysection ID: " + sectionId);
+        logger.info("Ini modifySection ID: " + sectionId);
         Optional<Section> section = sectionRepository.findById(sectionId);
         if (section.isPresent()) {
             Section existingsection = section.get();
             existingsection.setName(newsection.getName());
             existingsection.setDescription(newsection.getDescription());
             existingsection.setCreation_date(newsection.getCreation_date());
-            existingsection.setStock(newsection.isStock());
+            existingsection.setAvailable(newsection.isAvailable());
 
 
 
@@ -62,7 +62,7 @@ public class SectionService {
         } else {
             throw new SectionNotFoundException(sectionId);
         }
-        logger.info("End modifysection section: " + section);
+        logger.info("End modifySection section: " + section);
     }
 }
 

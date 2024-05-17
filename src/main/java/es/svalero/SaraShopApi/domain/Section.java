@@ -32,9 +32,9 @@ public class Section {
     private String description;
     @Column
     private LocalDate creation_date;
-    @Column
     @NotNull
-    private boolean stock;
+    @Column
+    private boolean available;
     @ToString.Exclude
     @OneToMany(mappedBy = "section")
     @JsonIgnore

@@ -38,12 +38,12 @@ public class ProductService {
         return productRepository.findById(id);
     }
 
-    public List<Product> findProductByBrandId(long brandId) throws SectionNotFoundException {
-        logger.info("Ini findProductByBrandId " + brandId);
-        Optional<Section> brandOptional = sectionService.findById(brandId);
-        if (brandOptional.isPresent()) {
-            logger.info("End findProductByBrandId " + brandId);
-            return productRepository.findProductBySectionId(brandOptional);
+    public List<Product> findProductBySectionId(long sectionId) throws SectionNotFoundException {
+        logger.info("Ini findProductBySection " + sectionId);
+        Optional<Section> sectionOptional = sectionService.findById(sectionId);
+        if (sectionOptional.isPresent()) {
+            logger.info("End findProductBySection " + sectionId);
+            return productRepository.findProductBySectionId(sectionId);
         } else {
             throw new SectionNotFoundException();
         }

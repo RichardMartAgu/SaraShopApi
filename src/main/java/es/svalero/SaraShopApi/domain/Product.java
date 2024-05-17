@@ -30,15 +30,12 @@ public class Product {
     @NotNull
     private float price;
     @Column
-    private LocalDate creation_date;
-    @Column
     @NotNull
     private boolean stock;
-
-
+    @Column
+    private LocalDate creation_date;
     @ToString.Exclude
     @ManyToOne
-    @NotNull(message = "El Id de la sección asociada es obligatoria")
     @JoinColumn(name = "section_id")
     private Section section;
 

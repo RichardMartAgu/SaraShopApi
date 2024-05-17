@@ -45,7 +45,7 @@ public class ProductController {
     public ResponseEntity<List<Product>> getProductBySectionId(@PathVariable long sectionId) {
         logger.info("ini GET/section/ " + sectionId + "/products");
         try {
-            List<Product> product = productService.findProductByBrandId(sectionId);
+            List<Product> product = productService.findProductBySectionId(sectionId);
             return new ResponseEntity<>(product, HttpStatus.OK);
         } catch (SectionNotFoundException e) {
             logger.warn("SectionNotFoundException ID: " + sectionId);

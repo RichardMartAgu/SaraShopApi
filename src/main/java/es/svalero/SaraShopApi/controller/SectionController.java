@@ -18,7 +18,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 
 @RestController
@@ -29,7 +28,7 @@ public class SectionController {
     private SectionService sectionService;
     private Logger logger = LoggerFactory.getLogger(SectionController.class);
 
-    @GetMapping("/section")
+    @GetMapping("/sections")
     public ResponseEntity<List<Section>> getAll() {
         List<Section> sectionList = sectionService.findAll();
         return new ResponseEntity<>(sectionList, HttpStatus.OK);
@@ -38,8 +37,8 @@ public class SectionController {
     @GetMapping("/section/{sectionId}")
     public ResponseEntity<Section> getSection(@PathVariable long sectionId) throws SectionNotFoundException {
         logger.info("ini GET/section/" + sectionId);
-        Optional<Section> optionalsection = sectionService.findById(sectionId);
-        Section section = optionalsection.orElseThrow(() -> new SectionNotFoundException(sectionId));
+        Optional<Section> optionalSection = sectionService.findById(sectionId);
+        Section section = optionalSection.orElseThrow(() -> new SectionNotFoundException(sectionId));
         logger.info("end GET/section/" + sectionId);
         return new ResponseEntity<>(section, HttpStatus.OK);
     }
@@ -62,7 +61,7 @@ public class SectionController {
     }
 
     @PutMapping("/section/{sectionId}")
-    public ResponseEntity<Void> modifysection(@Valid @RequestBody Section section, @PathVariable long sectionId) throws SectionNotFoundException {
+    public ResponseEntity<Void> modifySection(@Valid @RequestBody Section section, @PathVariable long sectionId) throws SectionNotFoundException {
         logger.info("ini PUT /section/" + sectionId);
         sectionService.modifySection(section, sectionId);
         logger.info("end PUT /section/" + sectionId);
