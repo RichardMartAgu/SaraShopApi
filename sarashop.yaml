@@ -1,0 +1,1021 @@
+openapi: 3.0.1
+info:
+  title: SaraShop API
+  description: API para la gestión de tiendas de ropa
+  version: 1.0.0
+servers:
+  - url: 'https://api.sarashop.com'
+tags:
+  - name: shop
+    description: Operaciones para gestionar las tiendas
+  - name: section
+    description: Operaciones para gestionar las secciones de la tienda
+  - name: product
+    description: Operaciones para gestionar los productos de cada sección
+paths:
+  /shop:
+    get:
+      tags:
+        - shop
+      summary: Listado de tiendas.
+      description: Esta operación permite consultar el listado completo de tiendas con toda su información.
+      responses:
+        '200':
+          description: Devuelve la lista completa de tiendas registradas
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ShopOut'
+              examples:
+                shop1:
+                  value:
+                    id: 1
+                    name: Sarashop
+                    address: Avenida Río Cina 5
+                    phone: 678543123
+                    open: true
+                    open_date: 20-05-2010
+
+        '500':
+          description: Error interno en el servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+
+    post:
+      tags:
+        - shop
+      summary: Registrar una nueva tienda
+      operationId: postShop
+      requestBody:
+        description: Información de la nueva tienda
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ShopIn'
+            examples:
+              shop1:
+                value:
+                  name: SaraShop
+                  address: Avenida Río Cinca, 5
+                  phone: 678543123
+                  open: true
+
+      responses:
+        '201':
+          description: Tienda registrada correctamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ShopOut'
+              examples:
+                shop1:
+                  value:
+                    id: 1
+                    name: Sarashop
+                    address: Avenida Río Cina 5
+                    phone: 678543123
+                    open: true
+                    open_date: 20-05-2010
+                    
+        '500':
+          description: Error interno en el servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+  /shop/{shopId}:
+    get:
+      tags:
+        - shop
+      summary: Buscar una tienda por su Id
+      operationId: searchShop
+      parameters:
+        - name: shopId
+          in: path
+          description: Identificador de la tienda
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Devuelve la tienda en función de su identificador
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ShopOut'
+              examples:
+                shop1:
+                  value:
+                    id: 1
+                    name: Sarashop
+                    address: Avenida Río Cina 5
+                    phone: 678543123
+                    open: true
+                    open_date: 20-05-2010
+                    
+        '404':
+          description: No se ha encontrado la tienda
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceNotFound'
+              example:
+                internalError: 404
+                message: "No se ha podido encontrar esta tienda"
+        '500':
+          description: Error interno en el servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+          
+    delete:
+      tags:
+        - shop
+      summary: Dar de baja una tienda
+      operationId: deleteShop
+      parameters:
+        - name: shopId
+          in: path
+          description: Identificador de la tienda
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: No content
+        '404':
+          description: No se ha encontrado la tienda
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceNotFound'
+              example:
+                internalError: 404
+                message: "No se ha podido encontrar esta tienda"
+        '400':
+          description: Bad Request
+
+        '500':
+          description: Error interno en el servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+
+    put:
+      tags:
+        - shop
+      summary: Modifica una tienda
+      description: Modifica los datos de una tienda concreta
+      operationId: modifyShop
+      parameters:
+        - name: shopId
+          in: path
+          description: Identificador de la tienda
+          required: true
+          schema:
+            type: number
+            format: int32
+            example: 1
+      requestBody:
+        description: Datos de tienda actualizados correctamente
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ShopIn'
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ShopOut'
+              examples:
+                shop1:
+                  value:
+                    id: 1
+                    name: Adidas
+                    address: Avenida Río Cinca 5
+                    phone: 678543217
+                    open: true
+                    open_date: 20-05-2010
+                    
+        '404':
+          description: No se ha encontrado esta tienda
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceNotFound'
+              example:
+                internalError: 404
+                message: "No se ha podido encontrar la tienda"
+        '500':
+          description: Error interno en el servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+    
+
+  /section:
+    get:
+      tags:
+        - section
+      summary: Listado de secciones
+      description: Esta operación permite consultar el listado completo de secciones con toda su información.
+      responses:
+        '200':
+          description: Devuelve la lista completa de secciones registradas
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SectionOut'
+              examples:
+                section1:
+                  value:
+                    - id: 1
+                      name: Deporte
+                      description: Ropa adecuada para realizar deporte
+                      creation_date: 2023-05-18
+                      available: false
+                      shop: [
+                        {
+                        id: 1,
+                        name: SaraShop,
+                        address: Avenida Río Cinca 5,
+                        phone: 678543123,
+                        open: true,
+                        open_date: 20-05-2010
+                        }
+                        ]
+                      
+                section2:
+                  value:
+                    - id: 2
+                      name: Verano
+                      description: Ropa adecuada para el verano
+                      creation_date: 2020-05-18
+                      available: true
+                      shop: [
+                        {
+                        id: 1,
+                        name: SaraShop,
+                        address: Avenida Río Cinca 5,
+                        phone: 678543123,
+                        open: true,
+                        open_date: 20-05-2010
+                        }
+                        ]
+        '500':
+          description: Error interno en el servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+
+    post:
+      tags:
+        - section
+      summary: Registrar una nueva sección
+      operationId: postSection
+      requestBody:
+        description: Información de la nueva sección
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SectionIn'
+      responses:
+        '201':
+          description: Sección registrada correctamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SectionOut'
+              examples:
+                section1:
+                  value:
+                    - id: 3
+                      name: Deporte
+                      description: Ropa adecuada para realizar deporte
+                      creation_date: 2023-05-18
+                      available: false
+                      products: []  
+                      shop: [
+                        {
+                        id: 1,
+                        name: SaraShop,
+                        address: Avenida Río Cinca 5,
+                        phone: 678543123,
+                        open: true,
+                        open_date: 20-05-2010
+                        }
+                        ]
+                section2:
+                  value:
+                    - id: 5
+                      name: Verano
+                      description: Ropa adecuada para el verano
+                      creation_date: 2020-05-18
+                      available: true
+                      products: []
+                      shop: [
+                        {
+                        id: 1,
+                        name: SaraShop,
+                        address: Avenida Río Cinca 5,
+                        phone: 678543123,
+                        open: true,
+                        open_date: 20-05-2010
+                        }
+                        ]
+
+        '500':
+          description: Error interno en el servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+  /section/{sectionId}:
+    get:
+      tags:
+        - section
+      summary: Buscar una sección por su identificador
+      operationId: searchSection
+      parameters:
+        - name: sectionId
+          in: path
+          description: Identificador de la sección
+          required: true
+          schema:
+            type: number
+            format: int32
+            example: 1
+      responses:
+        '200':
+          description: Devuelve la sección en función de su identificador
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SectionOut'
+              examples:
+                section1:
+                  value:
+                    - id: 1
+                      name: Deporte
+                      description: Ropa adecuada para realizar deporte
+                      creation_date: 2023-05-18
+                      available: false
+                      shop: [
+                        {
+                        id: 1,
+                        name: SaraShop,
+                        address: Avenida Río Cinca 5,
+                        phone: 678543123,
+                        open: true,
+                        open_date: 20-05-2010
+                        }
+                        ]
+               
+        '404':
+          description: No se ha encontrado la sección
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceNotFound'
+              example:
+                internalError: 1
+                message: "No se ha podido encontrar esta sección"
+        '500':
+          description: Error interno en el servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+    delete:
+      tags:
+        - section
+      summary: Dar de baja una sección
+      operationId: deleteSection
+      parameters:
+        - name: sectionId
+          in: path
+          description: Identificador de la sección
+          required: true
+          schema:
+            type: number
+            format: int32
+            example: 1
+      responses:
+        '204':
+          description: Ok
+        '404':
+          description: No se ha encontrado la sección
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceNotFound'
+              example:
+                internalError: 1
+                message: "No se ha podido encontrar esta sección"
+        '400':
+          description: Bad Request
+        '500':
+          description: Error interno en el servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+
+    put:
+      tags:
+        - section
+      summary: Modifica una sección
+      description: Modifica los datos de una sección concreta
+      operationId: modifySection
+      parameters:
+        - name: sectionId
+          in: path
+          description: Identificador de la sección
+          required: true
+          schema:
+            type: number
+            format: int32
+            example: 1
+      requestBody:
+        description: Datos de sección actualizados
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SectionIn'
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SectionOut'
+              examples:
+                section1:
+                  value:
+                    - id: 1
+                      name: Deporte
+                      description: Ropa adecuada para realizar deporte
+                      creation_date: 2010-05-18
+                      available: false
+                      shop: [
+                        {
+                        id: 1,
+                        name: SaraShop,
+                        address: Avenida Río Cinca 5,
+                        phone: 678543123,
+                        open: true,
+                        open_date: 20-05-2010
+                        }
+                        ]
+        '404':
+          description: No se ha encontrado esta sección
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceNotFound'
+              example:
+                internalError: 404
+                message: "No se ha podido encontrar la sección"
+        '500':
+          description: Error interno en el servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+                
+  /shop/{shopId}/sections:
+    get:
+      tags:
+        - section
+      summary: Listado de secciones por tiendas.
+      description: Esta operación permite consultar el listado completo de secciones asociados a una tienda específica.
+      parameters:
+        - name: shopId
+          in: path
+          required: true
+          description: Identificador de la tienda
+          schema:
+            type: integer
+            format: int64
+            example: 1
+      responses:
+        '200':
+          description: Devuelve la lista de secciones asociados a una tienda especifica
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SectionOut'
+              examples:
+                section1:
+                  value:
+                    - id: 1
+                      name: Deporte
+                      description: Ropa adecuada para realizar deporte
+                      creation_date: 2010-05-18
+                      available: false
+                      shop: [
+                        {
+                        id: 1,
+                        name: SaraShop,
+                        address: Avenida Río Cinca 5,
+                        phone: 678543123,
+                        open: true,
+                        open_date: 20-05-2010
+                        }
+                        ]
+        '404':
+          description: No se ha encontrado la tienda
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceNotFound'
+              example:
+                internalError: 404
+                message: "No se ha podido encontrar esta tienda"
+        '500':
+          description: Error interno en el servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+              example:
+                internalError: 500
+                message: "Internal Server Error"
+    
+
+  /products:
+    get:
+      tags:
+        - product
+      summary: Listado de productos.
+      description: Esta operación permite consultar el listado completo de productos con toda su información.
+      responses:
+        '200':
+          description: Devuelve la lista completa de productos registrados
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProductOut'
+              examples:
+                product1:
+                  value:
+                    - id: 1
+                      name: Ultraboost
+                      description: Zapatilla adecuada para realizar running
+                      price: 70
+                      creation_date: 2020-03-20
+                      stock: true
+                      section: [
+                        {
+                          "id": 1,
+                          "name": "Deporte",
+                          "description": "Ropa adecuada para realizar deporte",
+                          "creation_date": "2023-05-18",
+                          "available": false
+                        }
+                        ]
+                product2:
+                  value:
+                    - id: 2
+                      name: Gorra 
+                      description: Gorra para el verano
+                      price: 10
+                      creation_date: 2020-07-10
+                      stock: true
+                      section: 
+                        - id: 2
+                          name: Verano
+                          description: Ropa adecuada para el verano
+                          creation_date: 2023-05-18
+                          available: false
+        '500':
+          description: Error interno en el servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+
+    post:
+      tags:
+        - product
+      summary: Registrar un nuevo producto
+      operationId: postProduct
+      requestBody:
+        description: Información del nuevo producto
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductIn'
+      responses:
+        '201':
+          description: Producto registrado correctamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductOut'
+              examples:
+                product1:
+                  value:
+                    - id: 50
+                      name: Ultraboost
+                      description: Zapatilla adecuada para realizar running
+                      price: 70
+                      creation_date: 2020-03-20
+                      stock: true
+                      sectionId: 
+                      section: 
+                        - id: 2
+                          name: Verano
+                          description: Ropa adecuada para el verano
+                          creation_date: 2023-05-18
+                          available: false
+                product2:
+                  value:
+                    - id: 60
+                      name: Gorra 
+                      description: Gorra para el verano
+                      price: 10
+                      creation_date: 2020-07-10
+                      stock: true
+                      sectionId: [2]
+
+        '500':
+          description: Error interno en el servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+  /product/{productId}:
+    get:
+      tags:
+        - product
+      summary: Buscar un producto por su identificador
+      operationId: searchProduct
+      parameters:
+        - name: productId
+          in: path
+          description: Identificador del producto
+          required: true
+          schema:
+            type: number
+            format: int32
+            example: 2
+      responses:
+        '200':
+          description: Devuelve el producto según el identificador
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProductOut'
+              examples:
+                product1:
+                  value:
+                    - id: 1
+                      name: Ultraboost
+                      description: Zapatilla adecuada para realizar running
+                      price: 70
+                      creation_date: 2020-03-20
+                      stock: true
+                      section:
+                        - id: 2
+                          name: Verano
+                          description: Ropa adecuada para el verano
+                          creation_date: 2023-05-18
+                          available: false
+
+                      
+        '404':
+          description: No se ha encontrado el producto
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceNotFound'
+              example:
+                internalError: 404
+                message: "No se ha podido encontrar este producto"
+        '500':
+          description: Error interno en el servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+        
+    delete:
+      tags:
+        - product
+      summary: Dar de baja un producto
+      operationId: deleteProduct
+      parameters:
+        - name: productId
+          in: path
+          description: Identificador del producto
+          required: true
+          schema:
+            type: number
+            format: int32
+            example: 1
+      responses:
+        '204':
+          description: Ok
+        '404':
+          description: No se ha encontrado el producto
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceNotFound'
+              example:
+                internalError: 404
+                message: "No se ha podido encontrar este producto"
+        '400':
+          description: Bad Request
+        '500':
+          description: Error interno en el servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+
+    put:
+      tags:
+        - product
+      summary: Modifica un producto
+      description: Modifica los datos de un producto concreto
+      operationId: modifyProduct
+      parameters:
+        - name: productId
+          in: path
+          description: Identificador del producto
+          required: true
+          schema:
+            type: number
+            format: int32
+            example: 1
+      requestBody:
+        description: Datos del producto actualizados
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductIn'
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProductOut'
+              examples:
+                product1:
+                  value:
+                    - id: 1
+                      name: Ultraboost
+                      description: Zapatilla adecuada para realizar running
+                      price: 70
+                      creation_date: 2020-03-20
+                      stock: true
+                      section: [
+                        {
+                          "id": 1,
+                          "name": "Deporte",
+                          "description": "Ropa adecuada para realizar deporte",
+                          "creation_date": "2023-05-18",
+                          "available": false
+                        }
+                        ]
+        '404':
+          description: No se ha encontrado este producto
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceNotFound'
+              example:
+                internalError: 404
+                message: "No se ha podido encontrar este producto"
+        '500':
+          description: Error interno en el servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+    
+                
+  /section/{sectionId}/products:
+    get:
+      tags:
+        - product
+      summary: Listado de productos por secciones.
+      description: Esta operación permite consultar el listado completo de productos asociados a una sección específica.
+      parameters:
+        - name: sectionId
+          in: path
+          required: true
+          description: Identificador de la sección
+          schema:
+            type: integer
+            format: int64
+            example: 1
+      responses:
+        '200':
+          description: Devuelve la lista de productos asociados a una sección especificada
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProductOut'
+              examples:
+                product1:
+                  value:
+                    - id: 1
+                      name: Ultraboost
+                      description: Zapatilla adecuada para realizar running
+                      price: 70
+                      creation_date: 2020-03-20
+                      stock: true
+                      section: [
+                        {
+                          "id": 1,
+                          "name": "Deporte",
+                          "description": "Ropa adecuada para realizar deporte",
+                          "creation_date": "2023-05-18",
+                          "available": false
+                        }
+                        ]
+                product2:
+                  value:
+                    - id: 2
+                      name: Gorra 
+                      description: Gorra para el verano
+                      price: 10
+                      creation_date: 2020-07-10
+                      stock: true
+                      section:
+                        - id: 2
+                          name: Verano
+                          description: Ropa adecuada para el verano
+                          creation_date: 2023-05-18
+                          available: false
+        '404':
+          description: No se ha encontrado la sección
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceNotFound'
+              example:
+                internalError: 404
+                message: "No se ha podido encontrar esta sección"
+        '500':
+          description: Error interno en el servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+              example:
+                internalError: 500
+                message: "Internal Server Error"
+
+components:
+  schemas:
+    SectionIn:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Deporte
+        description:
+          type: string
+          example: Ropa para practicar deporte
+        available:
+          type: boolean
+          example: false
+        shop:
+          type: array  
+          items:       
+            type: integer
+            example: 1
+          example: [1] 
+        
+    SectionOut:
+      type: object
+      properties:
+        sectionId:
+          type: number
+          format: int32
+          example: 1
+      allOf:
+        - $ref: '#/components/schemas/SectionIn'
+    ProductIn:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Ultraboost
+        description:
+          type: string
+          example: Zapatilla adecuada para hacer running
+        price:
+          type: number
+          format: float
+          example: 70
+        stock:
+          type: boolean
+          example: true
+        section:
+          type: array  
+          items:       
+            type: integer
+            example: 1
+          example: [1]  
+
+    ProductOut:
+      type: object
+      properties:
+        productId:
+          type: number
+          format: int32
+          example: 1
+      allOf:
+        - $ref: '#/components/schemas/ProductIn'
+    ShopIn:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Adidas
+        address:
+          type: string
+          example: Avenida Río Cinca, 5
+        phone:
+          type: string
+          example: 678543217
+        open:
+          type: boolean
+        open_date:
+          type: string
+          example: 20-05-2010
+        
+    ShopOut:
+      type: object
+      properties:
+        shopId:
+          type: number
+          format: int32
+          example: 1
+      allOf:
+        - $ref: '#/components/schemas/ShopIn'
+    ErrorResponse:
+      properties:
+        internalError:
+          type: number
+          format: int32
+        message:
+          type: string
+      type: object
+    ResourceNotFound:
+      allOf:
+        - type: object
+        - $ref: '#/components/schemas/ErrorResponse'
+    BadRequestError:
+      type: object
+      properties:
+        internalError:
+          type: number
+          format: int32
+          example: 400
+        message:
+          type: string
+          example: "Bad Request"
+    InternalServerError:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/ErrorResponse'
+      example:
+        internalError: 500
+        message: "Internal Server Error"

@@ -1,0 +1,998 @@
+{
+	"info": {
+		"_postman_id": "a5478229-6c4f-4cb6-8c29-922b1f4d8688",
+		"name": "SaraStore",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "31669740"
+	},
+	"item": [
+		{
+			"name": "Section",
+			"item": [
+				{
+					"name": "All sections",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function() {\r",
+									"    pm.expect(pm.response.code).to.equal(200);\r",
+									"})\r",
+									"pm.test(\"Content-Type is JSON\", function () {\r",
+									"    pm.response.to.have.header(\"Content-Type\", \"application/json\");\r",
+									"});\r",
+									"pm.test(\"Response has expected data structure\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.be.an(\"array\");\r",
+									"    jsonData.forEach(function(item) {\r",
+									"        pm.expect(item).to.have.property(\"id\");\r",
+									"        pm.expect(item).to.have.property(\"name\");\r",
+									"        pm.expect(item).to.have.property(\"description\");\r",
+									"        pm.expect(item).to.have.property(\"creation_date\");\r",
+									"        pm.expect(item).to.have.property(\"available\");\r",
+									"\r",
+									"    });\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/sections",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"sections"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "FindById",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function() {\r",
+									"    pm.expect(pm.response.code).to.equal(200);\r",
+									"})\r",
+									"pm.test(\"Content-Type is JSON\", function () {\r",
+									"    pm.response.to.have.header(\"Content-Type\", \"application/json\");\r",
+									"});\r",
+									"pm.test(\"Response has expected data structure\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"        pm.expect(jsonData).to.have.property(\"id\");\r",
+									"        pm.expect(jsonData).to.have.property(\"name\");\r",
+									"        pm.expect(jsonData).to.have.property(\"description\");\r",
+									"        pm.expect(jsonData).to.have.property(\"creation_date\");\r",
+									"        pm.expect(jsonData).to.have.property(\"available\");\r",
+									"\r",
+									"    });"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/section/:sectionId",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"section",
+								":sectionId"
+							],
+							"variable": [
+								{
+									"key": "sectionId",
+									"value": "15"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "FindByShopId",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function() {\r",
+									"    pm.expect(pm.response.code).to.equal(200);\r",
+									"})\r",
+									"pm.test(\"Content-Type is JSON\", function () {\r",
+									"    pm.response.to.have.header(\"Content-Type\", \"application/json\");\r",
+									"});\r",
+									"pm.test(\"Response has expected data structure\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.be.an(\"array\");\r",
+									"    jsonData.forEach(function(item) {\r",
+									"        pm.expect(item).to.have.property(\"id\");\r",
+									"        pm.expect(item).to.have.property(\"name\");\r",
+									"        pm.expect(item).to.have.property(\"creation_date\");\r",
+									"        pm.expect(item).to.have.property(\"available\");\r",
+									"\r",
+									"    });\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/shop/:shopId/sections",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"shop",
+								":shopId",
+								"sections"
+							],
+							"variable": [
+								{
+									"key": "shopId",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add section",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function() {\r",
+									"    pm.expect(pm.response.code).to.equal(201);\r",
+									"})\r",
+									"pm.test(\"Content-Type is JSON\", function () {\r",
+									"    pm.response.to.have.header(\"Content-Type\", \"application/json\");\r",
+									"});\r",
+									"pm.test(\"Response contains valid data\", function() {\r",
+									"    var jsonData = pm.response.json();\r",
+									"  pm.expect(jsonData).to.have.property(\"id\");\r",
+									"        pm.expect(jsonData).to.have.property(\"name\");\r",
+									"        pm.expect(jsonData).to.have.property(\"description\");\r",
+									"        pm.expect(jsonData).to.have.property(\"creation_date\");\r",
+									"        pm.expect(jsonData).to.have.property(\"available\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Reebok\",\r\n    \"description\": \"987111111\",\r\n    \"available\": true,\r\n    \"shop\":{\r\n        \"id\": 6\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/section",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"section"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit section",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status code is 204', function () {\r",
+									"    pm.response.to.have.status(204);\r",
+									"})\r",
+									"\r",
+									"pm.test('Response body is empty', function () {\r",
+									"    pm.expect(pm.response.text()).to.be.empty;\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Resource is deleted\", function() {\r",
+									"    var url = pm.request.url.toString();\r",
+									"    var parts = url.split(\"/\");\r",
+									"    var id = parts[parts.length - 1];\r",
+									"\r",
+									"       pm.sendRequest({\r",
+									"        url: 'http://localhost:8080/section/' + id, \r",
+									"        method: 'GET',\r",
+									"        header: {\r",
+									"            'Content-Type': 'application/json',\r",
+									"        }\r",
+									"    }, function (err, res) {\r",
+									"        pm.expect(err).to.be.null;\r",
+									"        pm.expect(res).to.have.property('code', 200);\r",
+									"    });\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Reebok\",\r\n    \"description\": \"987111111\",\r\n    \"creation_date`\": \"1965-10-20\",\r\n    \"avaliable\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/section/:sectionId",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"section",
+								":sectionId"
+							],
+							"variable": [
+								{
+									"key": "sectionId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete section",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status code is 204', function () {\r",
+									"    pm.response.to.have.status(204);\r",
+									"})\r",
+									"\r",
+									"pm.test('Response body is empty', function () {\r",
+									"    pm.expect(pm.response.text()).to.be.empty;\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Resource is deleted\", function() {\r",
+									"    var url = pm.request.url.toString();\r",
+									"    var parts = url.split(\"/\");\r",
+									"    var id = parts[parts.length - 1];\r",
+									"    \r",
+									"     pm.sendRequest({\r",
+									"        url: 'http://localhost:8080/section/' + id, \r",
+									"        method: 'GET',\r",
+									"        header: {\r",
+									"            'Content-Type': 'application/json',\r",
+									"        }\r",
+									"    }, function (err, res) {\r",
+									"        pm.expect(err).to.be.null;\r",
+									"        pm.expect(res).to.have.property('code', 404);\r",
+									"    });\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/section/:sectionId",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"section",
+								":sectionId"
+							],
+							"variable": [
+								{
+									"key": "sectionId",
+									"value": "8"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Shop",
+			"item": [
+				{
+					"name": "All shops",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function() {\r",
+									"    pm.expect(pm.response.code).to.equal(200);\r",
+									"})\r",
+									"pm.test(\"Content-Type is JSON\", function () {\r",
+									"    pm.response.to.have.header(\"Content-Type\", \"application/json\");\r",
+									"});\r",
+									"pm.test(\"Response has expected data structure\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.be.an(\"array\");\r",
+									"    jsonData.forEach(function(item) {\r",
+									"        pm.expect(item).to.have.property(\"id\");\r",
+									"        pm.expect(item).to.have.property(\"name\");\r",
+									"        pm.expect(item).to.have.property(\"address\");\r",
+									"        pm.expect(item).to.have.property(\"phone\");\r",
+									"        pm.expect(item).to.have.property(\"open_date\");\r",
+									"        pm.expect(item).to.have.property(\"open\");\r",
+									"\r",
+									"    });\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/shops",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"shops"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "FindById",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function() {",
+									"    pm.expect(pm.response.code).to.equal(200);",
+									"})",
+									"pm.test(\"Content-Type is JSON\", function () {",
+									"    pm.response.to.have.header(\"Content-Type\", \"application/json\");",
+									"});",
+									"pm.test(\"Response has expected data structure\", function () {",
+									"    var jsonData = pm.response.json();",
+									"     pm.expect(jsonData).to.have.property(\"id\");",
+									"        pm.expect(jsonData).to.have.property(\"name\");",
+									"        pm.expect(jsonData).to.have.property(\"address\");",
+									"        pm.expect(jsonData).to.have.property(\"phone\");",
+									"        pm.expect(jsonData).to.have.property(\"open_date\");",
+									"        pm.expect(jsonData).to.have.property(\"open\");",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/shop/:shopId",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"shop",
+								":shopId"
+							],
+							"variable": [
+								{
+									"key": "shopId",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add shop",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function() {\r",
+									"    pm.expect(pm.response.code).to.equal(201);\r",
+									"})\r",
+									"pm.test(\"Content-Type is JSON\", function () {\r",
+									"    pm.response.to.have.header(\"Content-Type\", \"application/json\");\r",
+									"});\r",
+									"pm.test(\"Response contains valid data\", function() {\r",
+									"    var jsonData = pm.response.json();\r",
+									"   pm.expect(jsonData).to.have.property(\"id\");\r",
+									"        pm.expect(jsonData).to.have.property(\"name\");\r",
+									"        pm.expect(jsonData).to.have.property(\"address\");\r",
+									"        pm.expect(jsonData).to.have.property(\"phone\");\r",
+									"        pm.expect(jsonData).to.have.property(\"open_date\");\r",
+									"        pm.expect(jsonData).to.have.property(\"open\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"MadShoes\",\r\n    \"address\":\"hola\",\r\n    \"phone\": \"234234234\",\r\n    \"open\":\"true\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/shop",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"shop"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit shop",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status code is 204', function () {\r",
+									"    pm.response.to.have.status(204);\r",
+									"})\r",
+									"\r",
+									"pm.test('Response body is empty', function () {\r",
+									"    pm.expect(pm.response.text()).to.be.empty;\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Resource is deleted\", function() {\r",
+									"    var url = pm.request.url.toString();\r",
+									"    var parts = url.split(\"/\");\r",
+									"    var id = parts[parts.length - 1];\r",
+									"\r",
+									"       pm.sendRequest({\r",
+									"        url: 'http://localhost:8080/shop/' + id, \r",
+									"        method: 'GET',\r",
+									"        header: {\r",
+									"            'Content-Type': 'application/json',\r",
+									"        }\r",
+									"    }, function (err, res) {\r",
+									"        pm.expect(err).to.be.null;\r",
+									"        pm.expect(res).to.have.property('code', 200);\r",
+									"    });\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"MadShoes\",\r\n    \"address\":\"hola\",\r\n    \"phone\": \"234234234\",\r\n    \"open_date\": \"1965-10-20\" ,\r\n    \"open\":\"true\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/shop/:shopId",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"shop",
+								":shopId"
+							],
+							"variable": [
+								{
+									"key": "shopId",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete shop",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status code is 204', function () {\r",
+									"    pm.response.to.have.status(204);\r",
+									"})\r",
+									"\r",
+									"pm.test('Response body is empty', function () {\r",
+									"    pm.expect(pm.response.text()).to.be.empty;\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Resource is deleted\", function() {\r",
+									"    var url = pm.request.url.toString();\r",
+									"    var parts = url.split(\"/\");\r",
+									"    var id = parts[parts.length - 1];\r",
+									"    \r",
+									"     pm.sendRequest({\r",
+									"        url: 'http://localhost:8080/shop/' + id, \r",
+									"        method: 'GET',\r",
+									"        header: {\r",
+									"            'Content-Type': 'application/json',\r",
+									"        }\r",
+									"    }, function (err, res) {\r",
+									"        pm.expect(err).to.be.null;\r",
+									"        pm.expect(res).to.have.property('code', 404);\r",
+									"    });\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/shop/:shopId",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"shop",
+								":shopId"
+							],
+							"variable": [
+								{
+									"key": "shopId",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Product",
+			"item": [
+				{
+					"name": "All products",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function() {\r",
+									"    pm.expect(pm.response.code).to.equal(200);\r",
+									"})\r",
+									"pm.test(\"Content-Type is JSON\", function () {\r",
+									"    pm.response.to.have.header(\"Content-Type\", \"application/json\");\r",
+									"});\r",
+									"pm.test(\"Response has expected data structure\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.be.an(\"array\");\r",
+									"    jsonData.forEach(function(item) {\r",
+									"        pm.expect(item).to.have.property(\"id\");\r",
+									"        pm.expect(item).to.have.property(\"name\");\r",
+									"        pm.expect(item).to.have.property(\"description\");\r",
+									"        pm.expect(item).to.have.property(\"price\");\r",
+									"        pm.expect(item).to.have.property(\"stock\");\r",
+									"        pm.expect(item).to.have.property(\"creation_date\");\r",
+									"\r",
+									"    });\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/products",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "FindById",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function() {\r",
+									"    pm.expect(pm.response.code).to.equal(200);\r",
+									"})\r",
+									"pm.test(\"Content-Type is JSON\", function () {\r",
+									"    pm.response.to.have.header(\"Content-Type\", \"application/json\");\r",
+									"});\r",
+									"pm.test(\"Response has expected data structure\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"     pm.expect(jsonData).to.have.property(\"id\");\r",
+									"        pm.expect(jsonData).to.have.property(\"name\");\r",
+									"        pm.expect(jsonData).to.have.property(\"description\");\r",
+									"        pm.expect(jsonData).to.have.property(\"price\");\r",
+									"        pm.expect(jsonData).to.have.property(\"stock\");\r",
+									"        pm.expect(jsonData).to.have.property(\"creation_date\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/product/:productId",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"product",
+								":productId"
+							],
+							"variable": [
+								{
+									"key": "productId",
+									"value": "4"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "FindBySectionId",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function() {\r",
+									"    pm.expect(pm.response.code).to.equal(200);\r",
+									"})\r",
+									"pm.test(\"Content-Type is JSON\", function () {\r",
+									"    pm.response.to.have.header(\"Content-Type\", \"application/json\");\r",
+									"});\r",
+									"pm.test(\"Response has expected data structure\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.be.an(\"array\");\r",
+									"    jsonData.forEach(function(item) {\r",
+									"        pm.expect(item).to.have.property(\"id\");\r",
+									"        pm.expect(item).to.have.property(\"name\");\r",
+									"        pm.expect(item).to.have.property(\"description\");\r",
+									"        pm.expect(item).to.have.property(\"price\");\r",
+									"        pm.expect(item).to.have.property(\"stock\");\r",
+									"        pm.expect(item).to.have.property(\"creation_date\");\r",
+									"\r",
+									"    });\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/section/:sectionId/products",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"section",
+								":sectionId",
+								"products"
+							],
+							"variable": [
+								{
+									"key": "sectionId",
+									"value": "14"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add product",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function() {",
+									"    pm.expect(pm.response.code).to.equal(201);",
+									"})",
+									"pm.test(\"Content-Type is JSON\", function () {",
+									"    pm.response.to.have.header(\"Content-Type\", \"application/json\");",
+									"});",
+									"pm.test(\"Response contains valid data\", function() {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.have.property(\"id\");",
+									"    pm.expect(jsonData).to.have.property(\"name\");",
+									"    pm.expect(jsonData).to.have.property(\"description\");",
+									"    pm.expect(jsonData).to.have.property(\"price\");",
+									"    pm.expect(jsonData).to.have.property(\"stock\");",
+									"    pm.expect(jsonData).to.have.property(\"creation_date\");",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"N001\",\r\n    \"description\": \"hola\" ,\r\n    \"price\": 35.5 ,\r\n    \"stock\": true,\r\n    \"section\":{\r\n        \"id\": 14\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/product",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"product"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit product",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status code is 204', function () {\r",
+									"    pm.response.to.have.status(204);\r",
+									"})\r",
+									"\r",
+									"pm.test('Response body is empty', function () {\r",
+									"    pm.expect(pm.response.text()).to.be.empty;\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Resource is deleted\", function() {\r",
+									"    var url = pm.request.url.toString();\r",
+									"    var parts = url.split(\"/\");\r",
+									"    var id = parts[parts.length - 1];\r",
+									"\r",
+									"       pm.sendRequest({\r",
+									"        url: 'http://localhost:8080/shop/' + id, \r",
+									"        method: 'GET',\r",
+									"        header: {\r",
+									"            'Content-Type': 'application/json',\r",
+									"        }\r",
+									"    }, function (err, res) {\r",
+									"        pm.expect(err).to.be.null;\r",
+									"        pm.expect(res).to.have.property('code', 200);\r",
+									"    });\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"N001\",\r\n    \"description\": \"hola\" ,\r\n    \"price\": 35.5 ,\r\n    \"stock\": true,\r\n    \"section\":{\r\n        \"id\": 2\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/product/?productId=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"product",
+								""
+							],
+							"query": [
+								{
+									"key": "productId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete product",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status code is 204', function () {\r",
+									"    pm.response.to.have.status(204);\r",
+									"})\r",
+									"\r",
+									"pm.test('Response body is empty', function () {\r",
+									"    pm.expect(pm.response.text()).to.be.empty;\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Resource is deleted\", function() {\r",
+									"    var url = pm.request.url.toString();\r",
+									"    var parts = url.split(\"/\");\r",
+									"    var id = parts[parts.length - 1];\r",
+									"    \r",
+									"    pm.sendRequest({\r",
+									"        url: 'http://localhost:8080/product/' + id, \r",
+									"        method: 'GET',\r",
+									"        header: {\r",
+									"            'Content-Type': 'application/json',\r",
+									"        }\r",
+									"    }, function (err, res) {\r",
+									"        pm.expect(err).to.be.null;\r",
+									"        pm.expect(res).to.have.property('code', 404);\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/product/:productId",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"product",
+								":productId"
+							],
+							"variable": [
+								{
+									"key": "productId",
+									"value": "4"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
