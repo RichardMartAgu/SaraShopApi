@@ -1,7 +1,9 @@
 package es.svalero.SaraShopApi.controller;
 
 import es.svalero.SaraShopApi.domain.ErrorResponse;
+import es.svalero.SaraShopApi.domain.Product;
 import es.svalero.SaraShopApi.domain.Shop;
+import es.svalero.SaraShopApi.exceptions.SectionNotFoundException;
 import es.svalero.SaraShopApi.exceptions.ShopNotFoundException;
 import es.svalero.SaraShopApi.service.ShopService;
 import jakarta.validation.Valid;
@@ -13,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.HashMap;
 import java.util.List;

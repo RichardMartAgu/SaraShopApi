@@ -35,8 +35,13 @@ public class Section {
     @NotNull
     @Column
     private boolean available;
+
     @ToString.Exclude
-    @OneToMany(mappedBy = "section")
+    @ManyToOne
+    @JoinColumn(name = "shop_id")
+    private Shop shop;
+    @ToString.Exclude
+    @OneToMany(mappedBy = "section", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private List<Product> product;
 

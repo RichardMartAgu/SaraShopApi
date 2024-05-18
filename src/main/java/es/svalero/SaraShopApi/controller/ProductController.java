@@ -50,7 +50,7 @@ public class ProductController {
         } catch (SectionNotFoundException e) {
             logger.warn("SectionNotFoundException ID: " + sectionId);
             throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND, "Brand not found with ID: " + sectionId, e);
+                    HttpStatus.NOT_FOUND, "Section not found with ID: " + sectionId, e);
         } finally {
             logger.info("end GET/section/ " + sectionId + "/products");
         }

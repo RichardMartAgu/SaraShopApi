@@ -1,8 +1,10 @@
 package es.svalero.SaraShopApi.controller;
 
 import es.svalero.SaraShopApi.domain.ErrorResponse;
+import es.svalero.SaraShopApi.domain.Product;
 import es.svalero.SaraShopApi.domain.Section;
 import es.svalero.SaraShopApi.exceptions.SectionNotFoundException;
+import es.svalero.SaraShopApi.exceptions.ShopNotFoundException;
 import es.svalero.SaraShopApi.service.SectionService;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
@@ -13,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.HashMap;
 import java.util.List;
@@ -66,6 +69,21 @@ public class SectionController {
         sectionService.modifySection(section, sectionId);
         logger.info("end PUT /section/" + sectionId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @GetMapping("/shop/{shopId}/sections")
+    public ResponseEntity<List<Section>> findSectionByShopId(@PathVariable long shopId) {
+        logger.info("ini GET/shop/ " + shopId + "/sections");
+        try {
+            List<Section> sections = sectionService.findSectionByShopId(shopId);
+            return new ResponseEntity<>(sections, HttpStatus.OK);
+        } catch (ShopNotFoundException e) {
+            logger.warn("ShopsNotFoundException ID: " + shopId);
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, "Shop not found with ID: " + shopId, e);
+        } finally {
+            logger.info("end GET/shop/ " + shopId + "/sections");
+        }
     }
 
 
