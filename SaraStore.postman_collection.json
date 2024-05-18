@@ -196,7 +196,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Reebok\",\r\n    \"description\": \"987111111\",\r\n    \"available\": true,\r\n    \"shop\":{\r\n        \"id\": 6\r\n    }\r\n}",
+							"raw": "{\r\n    \"name\": \"Ropa mujer\",\r\n    \"description\": \"Zona para la mujer\",\r\n    \"available\": true,\r\n    \"shop\":{\r\n        \"id\": 6\r\n    }\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -488,7 +488,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"MadShoes\",\r\n    \"address\":\"hola\",\r\n    \"phone\": \"234234234\",\r\n    \"open\":\"true\"\r\n}",
+							"raw": "{\r\n    \"name\": \"SaraIndependencia\",\r\n    \"address\":\"Independencia 23\",\r\n    \"phone\": \"654234765\",\r\n    \"open\":\"true\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -838,7 +838,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"N001\",\r\n    \"description\": \"hola\" ,\r\n    \"price\": 35.5 ,\r\n    \"stock\": true,\r\n    \"section\":{\r\n        \"id\": 14\r\n    }\r\n}",
+							"raw": "{\r\n    \"name\": \"Pantalón\",\r\n    \"description\": \"Pantalón invierno\" ,\r\n    \"price\": 35.5 ,\r\n    \"stock\": true,\r\n    \"section\":{\r\n        \"id\": 14\r\n    }\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"

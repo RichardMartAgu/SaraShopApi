@@ -2188,3 +2188,5 @@ Caused by: java.sql.SQLException: Can't create table `sara_db`.`section` (errno:
 2024-05-18 13:15:28,234 INFO e.s.S.s.SectionService [http-nio-8080-exec-7] Do section findAll
 2024-05-18 14:29:33,207 INFO e.s.S.s.SectionService [http-nio-8080-exec-10] Do section findAll
 2024-05-18 14:29:42,140 INFO e.s.S.s.ProductService [http-nio-8080-exec-2] Do Product findAll
+2024-05-18 15:24:17,407 INFO e.s.S.s.ProductService [http-nio-8080-exec-4] Do Product findAll
+2024-05-18 16:20:41,128 INFO e.s.S.s.ProductService [http-nio-8080-exec-6] Do Product findAll
